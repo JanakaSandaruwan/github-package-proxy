@@ -1,0 +1,57 @@
+openapi: 3.0.0
+info:
+  title: GitHub Maven Proxy
+  description: This API proxies requests to a GitHub Maven repository, handling redirects and streaming responses.
+  version: 1.0.0
+servers:
+  - url: http://localhost:{port}
+    description: Local server
+    variables:
+      port:
+        default: '3001'
+        description: The port where the server is running
+paths:
+  /{anyPath*}:
+    get:
+      summary: Proxies request to GitHub Maven repository
+      description: |
+        This endpoint proxies requests to a GitHub Maven repository.
+        It checks if the path starts with the specified GROUP_ID and
+        then forwards the request to the corresponding URL in the GitHub repository.
+      parameters:
+        - name: anyPath*
+          in: path
+          required: true
+          description: Any path to be proxied to the GitHub Maven repository
+          schema:
+            type: string
+            example: my-group/my-repo/1.0.0/my-artifact.jar
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '302':
+          description: Redirect response
+          headers:
+            Location:
+              description: URL to redirect to
+              schema:
+                type: string
+        '404':
+          description: Invalid path
+          content:
+            text/plain:
+              schema:
+                type: string
+
+        '500':
+          description: Internal server error
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Unknown error
