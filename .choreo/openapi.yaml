@@ -8,7 +8,7 @@ servers:
     description: Local server
     variables:
       port:
-        default: '3001'
+        default: '5000'
         description: The port where the server is running
 paths:
   /{anyPath*}:
