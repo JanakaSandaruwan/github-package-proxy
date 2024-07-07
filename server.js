@@ -8,6 +8,8 @@ const GITHUB_REPO = process.env.GITHUB_REPO;
 const GROUP_ID = process.env.GROUP_ID;
 
 app.get('*', async (req, res) => {
+    console.log("Called");
+    console.log(req.path);
     try {
         // checks if path starts with GROUPID
         const pattern = new RegExp(`^\/${GROUP_ID}\/(.+)$`);
