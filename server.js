@@ -11,7 +11,6 @@ app.get('/org/ballerinalang/:package/:version/:file', async (req, res) => {
     try {
         // checks if path starts with GROUPID
         const pattern = new RegExp(`^\/${GROUP_ID}\/(.+)$`);
-
         const match = req.path.match(pattern);
         if (!match) {
             return res.status(404).send('Invalid path: ' + req.path);

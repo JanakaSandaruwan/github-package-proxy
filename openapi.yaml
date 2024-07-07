@@ -52,13 +52,13 @@ paths:
         '404':
           description: File not found
           content:
-            text/plain:
+            text/html:
               schema:
                 type: string
         '500':
           description: Internal server error
           content:
-            text/plain:
+            text/html:
               schema:
                 type: string
                 example: Unknown error
