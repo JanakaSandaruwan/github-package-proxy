@@ -16,9 +16,6 @@ app.get('/org/ballerinalang/:package/:version/:file', async (req, res) => {
         if (!match) {
             return res.status(404).send('Invalid path: ' + req.path);
         }
-        console.log(req.params.package);
-        console.log(req.params.version);
-        console.log(req.params.file);
         const targetURL = `https://maven.pkg.github.com/${GITHUB_ORG}/${GITHUB_REPO}/org/ballerinalang/${req.params.package}/${req.params.version}/${req.params.file}`;
         const response = await axios.get(targetURL, {
             responseType: 'stream',
@@ -42,7 +39,9 @@ app.get('/org/ballerinalang/:package/:version/:file', async (req, res) => {
             response.data.pipe(res);
         }
     } catch (error) {
-        console.error(error.response.data);
+        console.log(req.params.package);
+        console.log(req.params.version);
+        console.log(req.params.file);
         res.status(error.response ? error.response.status : 500).send('Unknown error');
     }
 });
