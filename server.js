@@ -8,8 +8,6 @@ const GITHUB_REPO = process.env.GITHUB_REPO;
 const GROUP_ID = process.env.GROUP_ID;
 
 app.get('/org/ballerinalang/:package/:version/:file', async (req, res) => {
-    console.log("Called");
-    console.log(req.path);
     try {
         // checks if path starts with GROUPID
         const pattern = new RegExp(`^\/${GROUP_ID}\/(.+)$`);
@@ -18,6 +16,9 @@ app.get('/org/ballerinalang/:package/:version/:file', async (req, res) => {
         if (!match) {
             return res.status(404).send('Invalid path: ' + req.path);
         }
+        console.log(req.params.package);
+        console.log(req.params.version);
+        console.log(req.params.file);
         const targetURL = `https://maven.pkg.github.com/${GITHUB_ORG}/${GITHUB_REPO}/org/ballerinalang/${req.params.package}/${req.params.version}/${req.params.file}`;
         const response = await axios.get(targetURL, {
             responseType: 'stream',
