@@ -42,12 +42,12 @@ app.get('/org/ballerinalang/:package/:version/:file', async (req, res) => {
             response.data.pipe(res);
         }
     } catch (error) {
-        console.error(error);
-        res.status(error.response ? error.response.status : 500).send(error.response ? error.response.data : 'Unknown error');
+        console.error(error.response.data);
+        res.status(error.response ? error.response.status : 500).send('Unknown error');
     }
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
