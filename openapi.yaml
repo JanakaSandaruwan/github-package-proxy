@@ -1,26 +1,39 @@
 openapi: 3.0.0
 info:
-  title: GitHub Maven Proxy
-  description: This API proxies requests to a GitHub Maven repository, handling redirects and streaming responses.
+  title: Ballerina Package File Proxy
+  description: This API proxies requests to Ballerina package files, handling specific package versions and file requests.
   version: 1.0.0
 servers:
   - url: http://localhost:5000
 paths:
-  /{anyPath*}:
+  /org/ballerinalang/{package}/{version}/{file}:
     get:
-      summary: Proxies request to GitHub Maven repository
+      summary: Retrieve Ballerina package file
       description: |
-        This endpoint proxies requests to a GitHub Maven repository.
-        It checks if the path starts with the specified GROUP_ID and
-        then forwards the request to the corresponding URL in the GitHub repository.
+        This endpoint retrieves a specific file from a Ballerina package version.
+        It handles requests for different packages, versions, and files within the Ballerina organization.
       parameters:
-        - name: anyPath*
+        - name: package
           in: path
           required: true
-          description: Any path to be proxied to the GitHub Maven repository
+          description: The name of the Ballerina package
           schema:
             type: string
-            example: my-group/my-repo/1.0.0/my-artifact.jar
+            example: ballerina-parser
+        - name: version
+          in: path
+          required: true
+          description: The version of the Ballerina package
+          schema:
+            type: string
+            example: 2201.8.2
+        - name: file
+          in: path
+          required: true
+          description: The specific file to retrieve from the package
+          schema:
+            type: string
+            example: ballerina-parser-2201.8.2.module
       responses:
         '200':
           description: Successful response
@@ -37,12 +50,11 @@ paths:
               schema:
                 type: string
         '404':
-          description: Invalid path
+          description: File not found
           content:
             text/plain:
               schema:
                 type: string
-
         '500':
           description: Internal server error
           content:
