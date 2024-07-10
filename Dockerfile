@@ -4,4 +4,4 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 USER 10014
-CMD [ "node", "server.js" ]
+CMD [ "npm", "start" ]
